@@ -1,12 +1,8 @@
 <template>
-    <div>
-      <div class="header">
-          要闻早知道
-      </div>
+    <div class="container">
+
       <div class="content">
-        <div v-if="isshow"><img src="../../../static/images/Spin-1s-200px.gif" alt=""></div>
-        <router-link to="/"  v-for="(item,index) in newdata" :key="index" v-else>
-          <div class="newlist">
+        <router-link  v-for="(item,index) in newdata" :key="index" class="newlist" :to="{path:'/newdetail',query:{id:item.newsId}}">
             <div class="listleft">
               <img src="../../../static/images/iconfont_gonggaotongzhi.png">
             </div>
@@ -18,14 +14,12 @@
                 {{item.currentTime}}
               </div>
             </div>
-          </div>
-        </router-link>
-        <div class="nothing">
-          没有更多信息了
-        </div>
 
+        </router-link>
       </div>
-      <tabar></tabar>
+
+      <div class="loading" v-if="isshow"><img src="../../../static/images/Spin-1s-200px.gif"></div>
+      <div class="Nothing" v-else>没有更多了</div>
     </div>
 </template>
 
@@ -34,11 +28,9 @@
   import { Header } from 'mint-ui';
 
   Vue.component(Header.name, Header);
-  import tabar from '../../components/tabar'
     export default {
         name: "index",
       components:{
-          tabar
       },
       data(){
           return {
@@ -49,11 +41,13 @@
       methods:{
           getNewdata(){
             this.$axios.get('/hhdj/news/newsList.do?page=1&rows=10&type=2').then( res => {
+              console.log(res)
               if(res.data.code === 1){
                 this.newdata = res.data.rows
                 this.isshow = false
-                console.log(this.newdata)
               }
+            }).catch(err => {
+              this.isshow = true
             })
           }
       },
@@ -64,17 +58,11 @@
 </script>
 
 <style scoped lang="less">
-  .header{
-    width: 100%;
-    height: 0.88rem;
-    font-size: 18px;
-    color: #fff;
-    line-height: 1rem;
-    background: red;
-    text-align: center;
 
+
+  .content{
+    height: auto;
   }
-
   .newlist{
     width: 100%;
     height: 1.4rem;
@@ -84,7 +72,7 @@
     color: #333333;
     padding-bottom: 20px;
     padding-top: 20px;
-    border-bottom: 1px solid #676767;
+    border-bottom: 1px solid rgb(221,221,221);
 
     .listleft{
       width:1.4rem;
@@ -114,11 +102,23 @@
       }
     }
   }
-  .nothing{
-    margin: 20px auto;
-    text-align: center;
-    color: #676767;
+  .Nothing{
+    margin-top: 0.8rem;
+    height: 1rem;
     font-size: 14px;
+    font-weight: 400;
+    color: #666;
+    text-align: center;
+  }
+  .loading{
+    height: 1rem;
+    text-align: center;
+
+    img{
+      height: 1rem;
+      width: 1rem;
+      margin: 0 auto;
+    }
   }
 
 </style>

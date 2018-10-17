@@ -1,30 +1,13 @@
 <template>
-    <div>
-      <div class="header">
-        我的党建
-      </div>
-      <div class="avactor-wrap">
-        <router-link to="#">
-          <div class="tuxiang">
-            <img src="../../../static/images/pass.png" alt="">
-          </div>
-          <span class="avactor-title">您还没有登录，请登录</span>
-        </router-link>
-      </div>
-
-      <div class="list-wrap">
-        <div class="list-content">
-          <div class="list-left">
-            <img src="" alt="">
-          </div>
-          <div class="list-right">
-            <div class="title">
-
-            </div>
-            <div class="jiantou">
-
-            </div>
-          </div>
+    <div class="container">
+      <div>
+        <div class="logo">
+          <img src="../../../static/images/logo.png" alt="">
+        </div>
+        <div class="info-wrap">
+          <input type="text" placeholder="身份证号" v-model="username">
+          <input type="password" placeholder="密码" v-model="password">
+          <div class="submit" @click="submit">登录</div>
         </div>
       </div>
     </div>
@@ -32,44 +15,75 @@
 
 <script>
     export default {
-        name: "index"
+        name: "index",
+      data(){
+          return {
+            username:'',
+            password:''
+          }
+      },
+      methods:{
+          submit(){
+            console.log(this.username+this.password)
+          }
+      }
     }
 </script>
 
 <style scoped lang="less">
-  .header{
-    width: 100%;
-    height: 0.88rem;
-    font-size: 18px;
-    color: #fff;
-    line-height: 1rem;
-    background: red;
-    text-align: center;
-
+  .container{
+    background: #c50206;
+    width: 100vw;
+    height: 100vh;
   }
-  .avactor-wrap{
-    height: 3.75rem;
-    background: red;
+
+  .logo{
+    height: 0.98rem;
+    width: 4.1rem;
+    margin: 0.5rem auto;
+
+    img{
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .info-wrap{
+    height: 4.75rem;
+    width: 5rem;
+    margin: 0.4rem auto;
     text-align: center;
 
-    .tuxiang{
-      height: 1.5rem;
-      width: 1.5rem;
-      margin:auto;
-      border-radius: 50%;
-      overflow: hidden;
-      margin-bottom: -20px;
 
-
-      img{
-        width: 100%;
-        height: 100%;
-
-      }
+    input{
+      height: 0.8rem;
+      width: 5rem;
+      background: #c50206;
+      border: 1px solid #ff0;
     }
-    .avactor-title{
-      font-size: 12px;
+    input::-webkit-input-placeholder { /* WebKit browsers */
+      color: white;
+    }
+    input:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+      color: white;
+    }
+    input::-moz-placeholder { /* Mozilla Firefox 19+ */
+      color: white;
+    }
+    input:-ms-input-placeholder { /* Internet Explorer 10+ */
+      color: white;
+    }
+
+    .submit{
+      margin-top: 1rem;
+      font-size: 16px;
+      font-weight: 400;
+      height: 0.8rem;
+      line-height: 0.8rem;
+      width: 100%;
+      background: #e3574f;
       color: #fff;
+      border-radius: 5px;
     }
   }
 

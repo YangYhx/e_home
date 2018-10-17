@@ -2,22 +2,31 @@
     <div class="container">
       <div class="header">
         <div class="logo"></div>
-        <div class="login">
-          登录
-        </div>
+        <router-link to="/login">
+          <div class="login">
+            登录
+          </div>
+        </router-link>
+
       </div>
 
         <div class="swiper-container">
+
           <mt-swipe :auto="4000" :showIndicators="true">
-            <mt-swipe-item v-for="item in swiperImgs" :key="item.id">
-              <div class="wrap">
-                <img :src="item.imgUrl" style="width: 100%;height: 100%;">
-                <div class="swiper_title">
-                  {{item.title}}
+              <mt-swipe-item v-for="item in swiperImgs" :key="item.id">
+                <router-link :to="{path:'/newdetail',query:{id:item.url}}">
+                <div class="wrap">
+                  <img :src="item.imgUrl" style="width: 100%;height: 100%;">
+                  <div class="swiper_title">
+                    {{item.title}}
+                  </div>
                 </div>
-              </div>
-            </mt-swipe-item>
+                </router-link>
+              </mt-swipe-item>
+
+
           </mt-swipe>
+
         </div>
 
 
@@ -25,13 +34,13 @@
       <div class="contant-img">
 
        <div class="row">
-         <router-link to="/">
+         <router-link to="/neweye">
            <div class="imgs-component">
              <img class="img" src="../../../static/images/icon_01.png">
              <div class="imgs-title">信工新闻眼</div>
            </div>
          </router-link>
-         <router-link to="/">
+         <router-link to="/life">
            <div class="imgs-component">
              <img class="img" src="../../../static/images/icon_02.png" alt="">
              <div class="imgs-title">掌上组织生活</div>
@@ -46,19 +55,19 @@
        </div>
 
         <div class="row">
-          <router-link to="/">
+          <router-link to="/onechack">
             <div class="imgs-component">
               <img class="img" src="../../../static/images/icon_04.png" alt="">
               <div class="imgs-title">党建一点通</div>
             </div>
           </router-link>
-          <router-link to="/">
+          <router-link to="/showidentity">
             <div class="imgs-component">
               <img class="img" src="../../../static/images/icon_05.png" alt="">
               <div class="imgs-title">党员亮身份</div>
             </div>
           </router-link>
-          <router-link to="/">
+          <router-link to="/today">
             <div class="imgs-component">
               <img class="img" src="../../../static/images/icon_06.png" alt="">
               <div class="imgs-title">党史上的今天</div>
@@ -74,24 +83,23 @@
       <div class="tese clearfix">
         <div class="sell">
           <div>
-            <router-link to="/"></router-link>
+            <router-link to="#"></router-link>
           </div>
         </div>
         <div class="sell two">
-          <div class="sell_small">
-            <router-link to="/"></router-link>
-          </div>
-          <div class="sell_small">
-            <router-link to="/"></router-link>
-          </div>
+            <router-link to="/anystudy"  class="sell_small">
+            </router-link>
+
+            <router-link to="/system"  class="sell_small">
+            </router-link>
+
         </div>
         <div class="sell two">
-          <div class="sell_small">
-            <router-link to="/"></router-link>
-          </div>
-          <div class="sell_small">
-            <router-link to="/"></router-link>
-          </div>
+            <router-link to="/anyphoto"  class="sell_small">
+            </router-link>
+            <router-link to="/activity" class="sell_small">
+            </router-link>
+
         </div>
 
       </div>
@@ -164,7 +172,6 @@
       }
     }
     .swiper-container{
-      margin-top: 44px;
       height: 3.75rem;
 
       .wrap{
