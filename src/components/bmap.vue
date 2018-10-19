@@ -19,12 +19,6 @@
 
         let top_right_navigation = new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_RIGHT, type: BMAP_NAVIGATION_CONTROL_ZOOM, offset: new BMap.Size(20, 60)});
 
-        // function addMarker(point, index){  // 创建图标对象
-        //   let myIcon = new BMap.Icon( '', new BMap.Size(23, 25), {
-        //     anchor: new BMap.Size(10, 25)
-        //
-        //   })
-        // }
         let marker = new BMap.Marker(new BMap.Point(114.02,32.98));
         mp.addOverlay(marker); //声明一个标记点
         let label = new BMap.Label("黄淮学院",{offset:new BMap.Size(20,10)});//声明一个文字标注
@@ -33,7 +27,6 @@
 
         let geolocationControl = new BMap.GeolocationControl();
         mp.addControl(geolocationControl);
-
         mp.addControl(top_right_navigation);
       }
     },

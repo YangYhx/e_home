@@ -5,9 +5,11 @@
           <img src="../../../static/images/logo.png" alt="">
         </div>
         <div class="info-wrap">
-          <input type="text" placeholder="身份证号" v-model="username">
-          <input type="password" placeholder="密码" v-model="password">
-          <div class="submit" @click="submit">登录</div>
+          <form @submit.prevent class="form">
+            <input type="text" placeholder="身份证号" v-model="formdata.id_card">
+            <input type="password" placeholder="密码" v-model="formdata.password">
+            <button class="submit" @click="login">登录</button>
+          </form>
         </div>
       </div>
     </div>
@@ -18,13 +20,24 @@
         name: "index",
       data(){
           return {
-            username:'',
-            password:''
+            formdata:{
+              id_card:'',
+              password:''
+            }
           }
       },
       methods:{
-          submit(){
-            console.log(this.username+this.password)
+        login(){
+            console.log(this.formdata)
+          let formdata = new FormData()
+          formdata.append('id_card',this.formdata.id_card)
+          formdata.append('password',this.formdata.password)
+          this.$axios.post('/hhdj/user/userLogin.do',formdata).then( res => {
+              if(res.code === 1){
+                this.$store.commit('ADD_TOKEN',res.token)
+                this.$router.push('/myapp')
+              }
+            })
           }
       }
     }

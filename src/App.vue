@@ -2,6 +2,8 @@
   <div id="app">
     <mt-header v-if="$route.name!='home'" :title="title">
       <mt-button icon="back" slot="left" @click="$router.back()" v-if="!isshow"></mt-button>
+      <mt-button slot="right" v-if="isEdit" @click="hendleEdit"> 编辑</mt-button>
+      <mt-button slot="right" v-if="isSave"> 保存</mt-button>
     </mt-header>
     <router-view/>
     <tabbar v-if="isshow"></tabbar>
@@ -27,7 +29,26 @@ export default {
       }else {
         return false
       }
+    },
+    isEdit(){
+      if(this.$route.name === 'personinfo'){
+        return true
+      }else {
+        return false
+      }
+    },
+    isSave(){
+      if(this.$route.name === 'edit'){
+        return true
+      }else {
+        return false
+      }
     }
+  },
+  methods:{
+    hendleEdit(){
+      this.$router.push('/edit')
+    },
   }
 }
 </script>
@@ -43,7 +64,7 @@ export default {
     right: 0;
     left: 0;
     width: 100%;
-    height: 0.88rem;
+    height: 44px;
     z-index: 998;
     background: #c50206;
     margin: auto;

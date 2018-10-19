@@ -1,8 +1,6 @@
 <template>
     <div class="container">
-
-
-
+      <div ref="scroll" class="r-scroll">
         <router-link  class="new-list" v-for="(item,index) in newlist" :key="index" :to="{path:'/newdetail',query:{id:item.newsId}}">
           <div class="new-img">
             <img :src="item.pic" alt="">
@@ -16,17 +14,20 @@
               <div>
                 {{item.currentTime}}
               </div>
-             <div class="eye">
-               <img src="../../../static/images/12-eye.png">
-               {{item.count}}
-             </div>
+              <div class="eye">
+                <img src="../../../static/images/12-eye.png">
+                {{item.count}}
+              </div>
             </div>
           </div>
-      </router-link>
+        </router-link>
+      </div>
+
     </div>
 </template>
 
 <script>
+  import isContinue from '../../utils/isContinu'
     export default {
         name: "neweye",
       data(){
@@ -35,7 +36,9 @@
             size:10,
             type:0,
             newlist:[],
-            isshow:false
+            isshow:false,
+            scroll:null,
+            scrollWrap:null
           }
       },
       methods:{
@@ -44,18 +47,44 @@
               .then( res => {
                 console.log(res)
                 if(res.data.code === 1){
-                  this.newlist = res.data.rows
+                  this.newlist = this.newlist.concat(res.data.rows)
+                  this.pn = this.pn + 1
+                  if(this.newlist.length >= res.data.total){
+                    window.removeEventListener('scroll', this.scrollBottom)
+                  }
+                  console.log(this.newlist.length)
+                  console.log(this.pn)
                 }
               })
-          }
+          },
+        scrollBottom(){
+        //变量scrollTop是滚动条滚动时，距离顶部的距离
+        let scrollTop = document.documentElement.scrollTop||document.body.scrollTop;
+        //变量windowHeight是可视区的高度
+        let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+        //变量scrollHeight是滚动条的总高度
+        let scrollHeight = document.documentElement.scrollHeight||document.body.scrollHeight;
+        //滚动条到底部的条件
+        if(scrollTop+windowHeight==scrollHeight){
+          //写后台加载数据的函数
+          this.getdata();
+        }
+      }
       },
       created(){
-          this.getdata()
+        this.getdata();
+      },
+      mounted(){
+        window.addEventListener('scroll', this.scrollBottom)
       }
     }
 </script>
 
 <style scoped lang="less">
+
+  .r-scroll{
+    height: auto;
+  }
 
   .new-list{
     height: 2rem;
@@ -111,6 +140,20 @@
 
     }
 
+  }
+  .Nothing{
+    height: 1rem;
+    font-size: 14px;
+    font-weight: 400;
+    color: #666;
+  }
+  .loading{
+    height: 1rem;
+
+    img{
+      height: 1rem;
+      width: 1rem;
+    }
   }
 
 </style>

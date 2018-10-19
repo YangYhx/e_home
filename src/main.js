@@ -8,6 +8,7 @@ import 'swiper/dist/css/swiper.css'
 import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import $axios from './utils'
+import store from './store'
 
 Vue.prototype.$axios = $axios;
 Vue.config.productionTip = false
@@ -19,6 +20,7 @@ Vue.use(VueAwesomeSwiper)
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

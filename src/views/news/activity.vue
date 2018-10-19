@@ -27,8 +27,9 @@
 </template>
 
 <script>
+  import isContinu from "../../utils/isContinu";
   export default {
-    name: "neweye",
+    name: "activity",
     data(){
       return {
         pn:1,
@@ -44,16 +45,32 @@
           .then( res => {
             console.log(res)
             if(res.data.code === 1){
-              this.newlist = res.data.rows
-              this.isshow = false
+              this.newlist = this.newlist.concat(res.data.rows)
+              this.pn = this.pn+1
+              console.log(res.data.total)
+              if(this.newlist.length >= res.data.total){
+                window.removeEventListener('scorll',this.scorllBottom)
+              }
+              console.log(this.newlist.length)
             }
           }).catch(err => {
           this.isshow = true
         })
+      },
+      scorllBottom(){
+        console.log(333)
+        if(isContinu()){
+          this.getdata()
+        }
       }
     },
     created(){
+      console.log(111)
       this.getdata()
+    },
+    mounted(){
+      console.log(222)
+      window.addEventListener('scorll',this.scorllBottom)
     }
   }
 </script>

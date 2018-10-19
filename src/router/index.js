@@ -116,6 +116,18 @@ export default new Router({
       name:'findorg',
       meta:{title:'流动党员找组织'},
       component: () => import('@/views/news/findorg')
+    },
+    {
+      path:'/personinfo',
+      name:'personinfo',
+      meta:{title:'个人信息'},
+      component: () => import('@/views/loginafter/personinfo')
+    },
+    {
+      path:'/edit',
+      name:'edit',
+      meta:{title:'个人信息'},
+      component: () => import('@/views/loginafter/Editinfo')
     }
   ]
 })

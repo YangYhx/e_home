@@ -1,17 +1,26 @@
 <template>
     <div class="container">
 
-      <div class="avactor-wrap">
+      <div class="avactor-wrap" v-if="!isshow">
         <router-link to="/login">
           <div class="tuxiang">
-            <img src="../../../static/images/yuan.png" alt="">
+            <img src="../../../static/images/yuan.png">
           </div>
           <span class="avactor-title">您还没有登录，请登录</span>
         </router-link>
       </div>
 
-      <div class="list-wrap">
+      <div class="avactor-wrap" v-else>
         <router-link to="#">
+          <div class="tuxiang">
+            <img :src="infodata.header">
+          </div>
+          <span class="avactor-title">{{infodata.username}}</span>
+        </router-link>
+      </div>
+
+      <div class="list-wrap">
+        <router-link :to="isshow ? '/personinfo' : '#'">
           <div class="list-content">
 
             <div class="list-left">
@@ -46,7 +55,8 @@
           <div class="list-content">
 
             <div class="list-left">
-              <img src="../../../static/images/xgmm.png">
+
+              <img src="../../../static/images/xgmm.png" >
             </div>
             <div class="list-right">
               <div class="list-title">
@@ -74,28 +84,54 @@
             </div>
           </div>
         </router-link>
-
+        <button class="btn" @click="logout" v-if="isshow">退出登录</button>
       </div>
+
+
     </div>
 </template>
 
 <script>
     export default {
-        name: "index"
+        name: "index",
+      data(){
+          return {
+            infodata:{},
+            token:'',
+            isshow:false
+          }
+      },
+      methods:{
+          show(){
+            if(this.token){
+              this.isshow=true
+            }else {
+              this.isshow = false
+            }
+            this.getdata()
+          },
+        getdata(){
+          this.$axios.get('/hhdj/user/userInfo.do').then( res => {
+            if(res.data.code === 1){
+              this.infodata = res.data.data
+            }
+          })
+        },
+        logout(){
+            this.$store.commit('RESET_TOKEN',null)
+          this.$router.push('/login')
+        }
+      },
+      created(){
+        this.token = this.$store.state.token
+        this.show()
+
+      }
     }
 </script>
 
 <style scoped lang="less">
-  .header{
-    width: 100%;
-    height: 0.88rem;
-    font-size: 18px;
-    color: #fff;
-    line-height: 1rem;
-    background: #c50206;
-    text-align: center;
 
-  }
   .avactor-wrap{
     height: 2.8rem;
     background: #c50206;
@@ -123,6 +159,7 @@
   }
 
   .list-wrap{
+    height: auto;
     .list-content{
       display: flex;
       height: 1rem;
@@ -164,5 +201,16 @@
     }
 
   }
+.btn{
+  height: 1rem;
+  width: 100%;
+  background:#ef473a;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 400;
+  text-align: center;
+  line-height: 1rem;
+  border-radius: 10px;
 
+}
 </style>

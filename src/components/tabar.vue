@@ -82,42 +82,42 @@
   .nav-img1{
     margin-top: 5px;
     height: 0.48rem;
-    width: 0.48rem;
+    width: 0.4rem;
     background: url("../../static/images/党_grey.png") no-repeat;
     background-size: 100%;
   }
   .nav-img2{
     margin-top: 5px;
     height: 0.48rem;
-    width: 0.48rem;
+    width: 0.4rem;
     background: url("../../static/images/消息_grey.png") no-repeat;
     background-size: 100%;
   }
   .nav-img3{
     margin-top: 5px;
     height: 0.48rem;
-    width: 0.48rem;
+    width: 0.4rem;
     background: url("../../static/images/会员_grey.png") no-repeat;
     background-size: 100%;
   }
   .navimg1active{
     margin-top: 5px;
     height: 0.48rem;
-    width: 0.48rem;
+    width: 0.4rem;
     background: url("../../static/images/党_red.png") no-repeat;
     background-size: 100%;
   }
   .navimg2active{
     margin-top: 5px;
     height: 0.48rem;
-    width: 0.48rem;
+    width: 0.4rem;
     background: url("../../static/images/消息_red.png") no-repeat;
     background-size: 100%;
   }
   .navimg3active{
     margin-top: 5px;
     height: 0.48rem;
-    width: 0.48rem;
+    width: 0.4rem;
     background: url("../../static/images/会员_red.png") no-repeat;
     background-size: 100%;
   }

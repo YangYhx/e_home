@@ -1,24 +1,44 @@
 import axios from 'axios'
+import store from '../store/index'
 
-const baseURL = 'http://211.67.177.56:8080'
+const baseURL = '/api'
 const fe = axios.create({
   baseURL,
   timeout:20000
 })
 
+
 const xhr = {
-  get(url,data,config){
+  get(url,data,config={}){
+    let mytoken = store.state.token;
+    if(mytoken){
+      let headers = {
+        'token':mytoken
+      }
+      config.headers = {...config.headers,...headers}
+    }
     return new Promise((resolve ,reject) => {
-      fe.get(url,{params:data},config).then( res => {
-        if( res.data.code === 1){
+      fe.get(url,{params:data,...config}).then( res => {
           resolve(res)
-        }
-        else {
-          console.log("请求失败")
-        }
       }).catch( err => {
         reject(err)
       } )
+    })
+  },
+  post(url,data,config={}){
+    let mytoken = store.state.token;
+    if(mytoken){
+      let headers = {
+        'token':mytoken
+      }
+      config.headers = {...config.headers,...headers}
+    }
+    return new Promise((resolve,reject) => {
+      fe.post(url,data,config).then( res => {
+          resolve(res.data)
+      }).catch(err => {
+        reject(err)
+      })
     })
   }
 }
