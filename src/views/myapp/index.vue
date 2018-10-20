@@ -36,7 +36,7 @@
             </div>
           </div>
         </router-link>
-        <router-link to="#">
+        <router-link :to="isshow ? '/score' : '#'">
           <div class="list-content">
             <div class="list-left">
               <img src="../../../static/images/lxjf.png">

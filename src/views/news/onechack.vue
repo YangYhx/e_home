@@ -21,9 +21,8 @@
         </div>
       </div>
     </router-link>
-    <div class="Nothing" v-if="isshow">
-      已经没有最新的消息了
-    </div>
+    <div class="loading" v-if="isshow"><img src="../../../static/images/Spin-1s-200px.gif" alt=""></div>
+    <div class="Nothing" v-else>没有更多了</div>
   </div>
 </template>
 
@@ -45,16 +44,35 @@
           .then( res => {
             console.log(res)
             if(res.data.code === 1){
-              this.newlist = res.data.rows
-              if(this.newlist.length < 10){
-                this.isshow = true
+              this.newlist = [...this.newlist,...res.data.rows]
+              this.pn += 1
+              if(this.newlist.length >= res.data.total){
+                this.isshow = false
+                window.removeEventListener('scorll',this.scrollBottom)
               }
             }
           })
+      },
+      scrollBottom(){
+        //变量scrollTop是滚动条滚动时，距离顶部的距离
+        let scrollTop = document.documentElement.scrollTop||document.body.scrollTop;
+        //变量windowHeight是可视区的高度
+        let windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+        //变量scrollHeight是滚动条的总高度
+        let scrollHeight = document.documentElement.scrollHeight||document.body.scrollHeight;
+        //滚动条到底部的条件
+        if(scrollTop+windowHeight==scrollHeight){
+          //写后台加载数据的函数
+          this.getdata();
+        }
       }
     },
     created(){
       this.getdata()
+    },
+    mounted(){
+      this.isshow= true
+      window.addEventListener('scorll',this.scorllBottom)
     }
   }
 </script>
@@ -113,6 +131,23 @@
 
     }
 
+  }
+  .Nothing{
+    height: 1rem;
+    font-size: 14px;
+    font-weight: 400;
+    color: #666;
+    text-align: center;
+    padding-top: 10px;
+  }
+  .loading{
+    height: 1rem;
+    text-align: center;
+
+    img{
+      height: 1rem;
+      width: 1rem;
+    }
   }
 
 </style>

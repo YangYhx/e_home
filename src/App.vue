@@ -97,5 +97,10 @@ export default {
     text-decoration: none;
     color:#666;
   }
+  .mint-header-icon{
+    margin-top: 0.3rem;
+    vertical-align: middle;
+    display: inline-block;
+  }
 
 </style>

@@ -2,12 +2,11 @@
     <div class="container">
       <div class="header">
         <div class="logo"></div>
-        <router-link to="/login">
-          <div class="login">
+        <router-link :to="!isshow ? '/login' : '#'">
+          <div class="login" v-bind:hidden="isshow">
             登录
           </div>
         </router-link>
-
       </div>
 
         <div class="swiper-container">
@@ -23,8 +22,6 @@
                 </div>
                 </router-link>
               </mt-swipe-item>
-
-
           </mt-swipe>
 
         </div>
@@ -46,7 +43,7 @@
              <div class="imgs-title">掌上组织生活</div>
            </div>
          </router-link>
-         <router-link to="/">
+         <router-link :to="isshow ?  '/interaction' : '#'">
            <div class="imgs-component">
              <img class="img" src="../../../static/images/icon_03.png" alt="">
              <div class="imgs-title">党员云互动</div>
@@ -135,6 +132,12 @@
       },
     mounted(){
       this.getImgs();
+    },
+    computed:{
+          isshow(){
+            return this.$store.state.token
+
+          }
     }
   }
 </script>

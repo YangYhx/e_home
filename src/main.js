@@ -9,12 +9,14 @@ import MintUI from 'mint-ui'
 import 'mint-ui/lib/style.css'
 import $axios from './utils'
 import store from './store'
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 
 Vue.prototype.$axios = $axios;
 Vue.config.productionTip = false
 Vue.use(MintUI)
 Vue.use(VueAwesomeSwiper)
-
+Vue.use(ElementUI);
 
 /* eslint-disable no-new */
 new Vue({

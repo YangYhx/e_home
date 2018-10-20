@@ -1,68 +1,65 @@
 <template>
-    <div class="container">
-      <div ref="scroll" class="r-scroll">
-        <router-link  class="new-list" v-for="(item,index) in newlist" :key="index" :to="{path:'/newdetail',query:{id:item.newsId}}">
-          <div class="new-img">
-            <img :src="item.pic" alt="">
-          </div>
+  <div class="container">
+    <div ref="scroll" class="r-scroll">
+      <router-link  class="new-list" v-for="(item,index) in newlist" :key="index" :to="{path:'/newdetail',query:{id:item.newsId}}">
+        <div class="new-img">
+          <img :src="item.pic" alt="">
+        </div>
 
-          <div class="new-r">
-            <div class="new-title">
-              {{item.title}}
+        <div class="new-r">
+          <div class="new-title">
+            {{item.title}}
+          </div>
+          <div class="new-time">
+            <div>
+              {{item.currentTime}}
             </div>
-            <div class="new-time">
-              <div>
-                {{item.currentTime}}
-              </div>
-              <div class="eye">
-                <img src="../../../static/images/12-eye.png">
-                {{item.count}}
-              </div>
+            <div class="eye">
+              <img src="../../../static/images/12-eye.png">
+              {{item.count}}
             </div>
           </div>
-        </router-link>
-      </div>
-      <div class="loading" v-if="isshow"><img src="../../../static/images/Spin-1s-200px.gif" alt=""></div>
-      <div class="Nothing" v-else>没有更多了</div>
-
+        </div>
+      </router-link>
     </div>
+    <div class="loading" v-if="isshow"><img src="../../../static/images/Spin-1s-200px.gif" alt=""></div>
+    <div class="Nothing" v-else>没有更多了</div>
+
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "neweye",
-      data(){
-          return {
-            pn:1,
-            size:10,
-            type:0,
-            newlist:[],
-            isshow:false,
-            scroll:null,
-            total:''
-          }
+  export default {
+    name: "neweye",
+    data(){
+      return {
+        pn:1,
+        size:10,
+        type:0,
+        newlist:[],
+        isshow:false,
+        scroll:null,
+        scrollWrap:null
+      }
+    },
+    methods:{
+      getdata(){
+        this.$axios.get(`/hhdj/news/newsList.do?page=${this.pn}&rows=${this.size}&type=${this.type}`)
+          .then( res => {
+            console.log(res)
+            if(res.data.code === 1){
+              this.newlist = this.newlist.concat(res.data.rows)
+              this.pn = this.pn + 1
+              if(this.newlist.length >= res.data.total){
+                this.isshow = false
+                window.removeEventListener('scroll', this.scrollBottom)
+              }
+              console.log(this.newlist.length)
+              console.log(this.pn)
+            }
+          })
       },
-      methods:{
-          getdata(){
-            this.isshow = true
-            this.$axios.get(`/hhdj/news/newsList.do?page=${this.pn}&rows=${this.size}&type=${this.type}`)
-              .then( res => {
-                console.log(res)
-                if(res.data.code === 1){
-                  this.newlist = this.newlist.concat(res.data.rows)
-                  this.total = res.data.total
-                }
-              })
-          },
-        getMore(){
-          this.pn += 1
-          this.getdata()
-          if(this.newlist.length >= this.total){
-            this.isshow = false
-            window.removeEventListener('scroll', this.scrollBottom)
-          }
-        },
-        scrollBottom(){
+      scrollBottom(){
         //变量scrollTop是滚动条滚动时，距离顶部的距离
         let scrollTop = document.documentElement.scrollTop||document.body.scrollTop;
         //变量windowHeight是可视区的高度
@@ -72,18 +69,18 @@
         //滚动条到底部的条件
         if(scrollTop+windowHeight==scrollHeight){
           //写后台加载数据的函数
-          this.getMore()
+          this.getdata();
         }
       }
-      },
-      created(){
-        this.getdata();
-      },
-      mounted(){
-
-        window.addEventListener('scroll', this.scrollBottom)
-      }
+    },
+    created(){
+      this.getdata();
+    },
+    mounted(){
+      this.isshow = true
+      window.addEventListener('scroll', this.scrollBottom)
     }
+  }
 </script>
 
 <style scoped lang="less">

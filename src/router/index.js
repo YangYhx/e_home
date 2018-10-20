@@ -13,7 +13,8 @@ const coms = {
   life: () => import('@/views/news/life'),
   onechack: () => import('@/views/news/onechack'),
   showidentity: ()=> import('@/views/news/showidentity'),
-  today: ()=> import('@/views/news/today')
+  today: ()=> import('@/views/news/today'),
+  interaction: () => import('@/views/loginafter/interaction')
 }
 
 export default new Router({
@@ -52,8 +53,14 @@ export default new Router({
     {
       path:'/life',
       name:'life',
-      meta:{title:'掌上只生活'},
+      meta:{title:'掌上组织生活'},
       component:coms.life
+    },
+    {
+      path:'/interaction',
+      name:'interaction',
+      meta:{title:'党员云互动'},
+      component:coms.interaction
     },
     {
       path:'/onechack',
@@ -128,6 +135,18 @@ export default new Router({
       name:'edit',
       meta:{title:'个人信息'},
       component: () => import('@/views/loginafter/Editinfo')
+    },
+    {
+      path:'/score',
+      name:'score',
+      meta:{title:'个人量化积分'},
+      component:()=> import('@/views/loginafter/score')
+    },
+    {
+      path:'/scoredetail',
+      name:'scoredetail',
+      meta:{title:'积分明细'},
+      component:()=>import('@/views/loginafter/scoredetail')
     }
   ]
 })
