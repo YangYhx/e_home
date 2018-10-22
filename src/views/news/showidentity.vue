@@ -46,9 +46,6 @@
             console.log(res)
             if(res.data.code === 1){
               this.newlist = res.data.rows
-              if(this.newlist.length < 10){
-                this.isshow = true
-              }
             }
           })
       }

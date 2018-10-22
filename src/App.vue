@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <mt-header v-if="$route.name!='home'" :title="title">
-      <mt-button icon="back" slot="left" @click="$router.back()" v-if="!isshow"></mt-button>
+      <mt-button icon="back" slot="left" @click="back" v-if="!isshow"></mt-button>
       <mt-button slot="right" v-if="isEdit" @click="hendleEdit"> 编辑</mt-button>
       <mt-button slot="right" v-if="isSave"> 保存</mt-button>
     </mt-header>
@@ -49,6 +49,13 @@ export default {
     hendleEdit(){
       this.$router.push('/edit')
     },
+    back(){
+      if(this.$route.name== 'personinfo'){
+        this.$router.push('/myapp')
+      }else {
+        this.$router.back()
+      }
+    }
   }
 }
 </script>

@@ -3,7 +3,7 @@
 
 
   <mt-header :title="title">
-    <mt-button icon="back" slot="left" @click="$router.back()"></mt-button>
+    <mt-button icon="back" slot="left" @click="back"></mt-button>
     <mt-button slot="right" @click="hendleSave"> 保存</mt-button>
   </mt-header>
     <div class="container">
@@ -72,7 +72,7 @@
         <div class="info-list">
           <div class="left">入党时间</div>
           <div class="reight">
-            <div @click="openPicker">
+            <div>
               <input type="date" v-model="infodata.joinPartyTime">
             </div>
           </div>
@@ -83,7 +83,13 @@
         </div>
         <div class="info-list">
           <div class="left">当前身份</div>
-          <div class="reight"><input type="text" v-model="infodata.partyStatus"></div>
+          <div class="reight">
+            <select name="select" v-model="infodata.partyStatus">
+              <option value="0">积极分子</option>
+              <option value="1">预备党员</option>
+              <option value="2">党员</option>
+            </select>
+          </div>
         </div>
       </div>
     </div>
@@ -120,7 +126,8 @@
               partyStatus: '',
               header:'',
               idCard:''
-            }
+            },
+            headerurl:''
           }
       },
       methods:{
@@ -146,8 +153,9 @@
           formdata.append('joinPartyTime',this.infodata.joinPartyTime)
           formdata.append('lastPayTime',this.infodata.lastPayTime)
           formdata.append('partyStatus',this.infodata.partyStatus)
-          formdata.append('header',this.$store.state.header)
-          console.log(formdata)
+          if(this.$store.state.header){
+            formdata.append('header',this.$store.state.header)
+          }
             this.$axios.post('/hhdj/user/modifyInfo.do',formdata).then( res => {
               console.log(res)
               if(res.code === 1){
@@ -155,8 +163,9 @@
               }
             })
           },
-        openPicker() {
-          this.$refs.picker.open();
+        back(){
+          console.log(window.history.length)
+          this.$router.back()
         }
       },
       created(){
@@ -212,6 +221,10 @@
           height: 0.56rem;
           line-height: 0.56rem;
           width: auto;
+        }
+
+        select{
+          height: 100%;
         }
 
         .updata-img{

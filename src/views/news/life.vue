@@ -1,7 +1,7 @@
 <template>
     <div class="container">
       <div class="img-card">
-        <img src="../../../static/images/timg.jpg" alt="">
+        <img src="/static/images/timg.jpg" alt="">
       </div>
       <div class="item-wrap">
         <router-link to="/study" class="item">
