@@ -15,10 +15,15 @@
           </div>
         </div>
         <div class="item-content">{{item.content}}</div>
-        <div class="item-reply">
+
+          <div class="item-reply">
+            <router-link :to="{path:'/interactiondetail',query:{id:item.forumId,data:item}}">
             <img src="" alt="">
-             回复
-        </div>
+            回复
+            </router-link>
+          </div>
+
+
 
       </div>
     </div>

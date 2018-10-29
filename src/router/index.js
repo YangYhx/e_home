@@ -147,6 +147,12 @@ export default new Router({
       name:'scoredetail',
       meta:{title:'积分明细'},
       component:()=>import('@/views/loginafter/scoredetail')
+    },
+    {
+      path:'/interactiondetail',
+      name:'interactiondetail',
+      meta:{title:'党员云互动'},
+      component:() => import('@/views/loginafter/interactiondetail')
     }
   ]
 })

@@ -26,12 +26,11 @@
         imgFile.onload = (e)=>{
           let imgData = e.target.result.replace(/data:image\/jpeg;base64,/g,'');
           this.imgurl = e.target.result
-          this.$store.commit('IMG_BASE',imgData)
           let formData = new FormData()
           formData.append('myFile',imgData)
           this.$axios.post('/hhdj/image/uploadBase64.do',formData).then( res => {
             let header = res.url
-            this.$store.commit('IMG_URL',header) //form 表单需要发送的
+            this.$emit('img',header) //E://
           })
         }
       }

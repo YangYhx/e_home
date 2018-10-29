@@ -118,7 +118,8 @@
           })
         },
         logout(){
-            this.$store.commit('RESET_TOKEN',null)
+          this.$store.commit('RESET_TOKEN',null)
+          localStorage.clear();
           this.$router.push('/login')
         }
       },

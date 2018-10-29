@@ -27,7 +27,6 @@
 </template>
 
 <script>
-  import isContinu from "../../utils/isContinu";
   export default {
     name: "activity",
     data(){

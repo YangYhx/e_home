@@ -11,7 +11,8 @@
         <div class="info-list">
           <div class="left">头像</div>
           <div class="reight">
-            <upimg v-model="infodata.header" class="updata-img"></upimg>
+            <upimg v-model="infodata.header" class="updata-img" v-on:img="img">
+            </upimg>
           </div>
         </div>
         <div class="info-list">
@@ -127,7 +128,7 @@
               header:'',
               idCard:''
             },
-            headerurl:''
+            headerURL:''
           }
       },
       methods:{
@@ -153,8 +154,8 @@
           formdata.append('joinPartyTime',this.infodata.joinPartyTime)
           formdata.append('lastPayTime',this.infodata.lastPayTime)
           formdata.append('partyStatus',this.infodata.partyStatus)
-          if(this.$store.state.header){
-            formdata.append('header',this.$store.state.header)
+          if(this.headerURL){
+            formdata.append('header',this.headerURL)
           }
             this.$axios.post('/hhdj/user/modifyInfo.do',formdata).then( res => {
               console.log(res)
@@ -166,6 +167,10 @@
         back(){
           console.log(window.history.length)
           this.$router.back()
+        },
+        img(data){
+          console.log( data )
+          this.headerURL = data
         }
       },
       created(){
@@ -174,9 +179,6 @@
       computed:{
         title(){
           return this.$route.meta.title
-        },
-        header(){
-          return this.$store.state.header
         }
       }
     }

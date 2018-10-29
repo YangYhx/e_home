@@ -11,12 +11,14 @@ import $axios from './utils'
 import store from './store'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import { Toast } from 'mint-ui';
 
 Vue.prototype.$axios = $axios;
 Vue.config.productionTip = false
 Vue.use(MintUI)
 Vue.use(VueAwesomeSwiper)
 Vue.use(ElementUI);
+//在需要install的组件的时候必须使用use
 
 /* eslint-disable no-new */
 new Vue({

@@ -35,7 +35,6 @@
       methods:{
           getdata(){
             this.$axios.get('/hhdj/user/userInfo.do').then( res => {
-              console.log(res)
               if(res.data.code === 1){
                 this.score = res.data.data.totalScore
                 console.log(this.score)

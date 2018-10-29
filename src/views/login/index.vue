@@ -16,6 +16,7 @@
 </template>
 
 <script>
+  import { Toast } from 'mint-ui';
     export default {
         name: "index",
       data(){
@@ -32,10 +33,17 @@
           let formdata = new FormData()
           formdata.append('id_card',this.formdata.id_card)
           formdata.append('password',this.formdata.password)
+
           this.$axios.post('/hhdj/user/userLogin.do',formdata).then( res => {
               if(res.code === 1){
                 this.$store.commit('ADD_TOKEN',res.token)
                 this.$router.push('/myapp')
+              }else {
+                Toast({
+                  message: res.msg,
+                  position: 'top',
+                  duration: 3000
+                });
               }
             })
           }
@@ -98,6 +106,10 @@
       color: #fff;
       border-radius: 5px;
     }
+  }
+
+  .lose{
+    height: 30px;
   }
 
 </style>
